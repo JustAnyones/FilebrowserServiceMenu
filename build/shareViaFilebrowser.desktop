@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+MimeType=application/octet-stream;
+Actions=uploadToCloud
+X-KDE-Submenu=ShareUrlPluginType
+X-KDE-ServiceTypes=Purpose/ShareUrlPluginType
+
+[Desktop Action uploadToCloud]
+Name=Share via Filebrowser
+Icon=document-share
+Exec=/usr/bin/filebrowser-service-menu -filePath %f
