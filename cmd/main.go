@@ -66,5 +66,5 @@ func main() {
 		cli.NotifyErrorAndPrint(conn, fmt.Errorf("failed to upload: %v", err))
 		return
 	}
-	dbus.SendLinkNotification(conn, "Upload complete", "File uploaded successfully", link)
+	dbus.SendLinkNotification(conn, "Upload complete", "File uploaded successfully\n"+link, link)
 }
