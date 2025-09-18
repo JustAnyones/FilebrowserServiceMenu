@@ -6,6 +6,11 @@ X-KDE-Submenu=ShareUrlPluginType
 X-KDE-ServiceTypes=Purpose/ShareUrlPluginType
 
 [Desktop Action uploadToCloud]
-Name=Share via Filebrowser
+Name=Share via Filebrowser (30 days)
 Icon=document-share
 Exec=/usr/bin/filebrowser-service-menu -filePath %f
+
+[Desktop Action uploadToCloud]
+Name=Share via Filebrowser (permanently)
+Icon=document-share
+Exec=/usr/bin/filebrowser-service-menu -permanent true -filePath %f
