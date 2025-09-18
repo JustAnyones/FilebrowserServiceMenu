@@ -13,4 +13,4 @@ Exec=/usr/bin/filebrowser-service-menu -filePath %f
 [Desktop Action uploadToCloudPermanent]
 Name=Share via Filebrowser (permanently)
 Icon=document-share
-Exec=/usr/bin/filebrowser-service-menu -permanent true -filePath %f
+Exec=/usr/bin/filebrowser-service-menu -permanent -filePath %f
