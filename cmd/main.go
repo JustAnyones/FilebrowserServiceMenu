@@ -12,8 +12,14 @@ import (
 
 func main() {
 	filePath := flag.String("filePath", "", "Path to file to upload")
+	permanentShare := flag.Bool("permanent", false, "Indicates whether the share has no expiration")
 	awoken := flag.Bool("awoken", false, "Indicates if the program was awoken by the service menu")
 	flag.Parse()
+
+	expireInDays := 30
+	if *permanentShare {
+		expireInDays = 0
+	}
 
 	// Load config from file
 	fileCfg, err := config.NewConfigFromFile()
@@ -61,7 +67,7 @@ func main() {
 
 	// Perform the actual upload
 	cli.NotifyAndPrint(conn, "Uploading", "Uploading "+*filePath)
-	link, err := session.Upload(*filePath)
+	link, err := session.Upload(*filePath, expireInDays)
 	if err != nil {
 		cli.NotifyErrorAndPrint(conn, fmt.Errorf("failed to upload: %v", err))
 		return

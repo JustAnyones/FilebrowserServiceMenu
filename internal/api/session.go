@@ -59,12 +59,17 @@ func (session *Session) chunkedPatch(url string, offset string, body io.Reader) 
 	return client.Do(req)
 }
 
-func (session *Session) Share(fileUrl string) (string, error) {
+func (session *Session) Share(fileUrl string, expireInDays int) (string, error) {
+
 	postBody, _ := json.Marshal(map[string]string{
-		"expires":  "30",
+		"expires":  strconv.FormatInt(int64(expireInDays), 10),
 		"password": "",
 		"unit":     "days",
 	})
+	if expireInDays == 0 {
+		postBody, _ = json.Marshal(map[string]string{})
+	}
+
 	res, err := session.post(fileUrl, "text/plain", 0, bytes.NewBuffer(postBody))
 	if err != nil {
 		log.Fatalln("Error during share post:", err)
@@ -88,7 +93,7 @@ func (session *Session) Share(fileUrl string) (string, error) {
 	return downloadUrl, nil
 }
 
-func (session *Session) Upload(filePath string) (string, error) {
+func (session *Session) Upload(filePath string, expireInDays int) (string, error) {
 	fileName := filepath.Base(filePath)
 
 	// Open file
@@ -162,7 +167,7 @@ func (session *Session) Upload(filePath string) (string, error) {
 		res.Body.Close()
 	}
 
-	return session.Share(session.instanceUrl + "/api/share/" + remotePath)
+	return session.Share(session.instanceUrl+"/api/share/"+remotePath, expireInDays)
 }
 
 func Login(instanceUrl, username, password string) (*Session, error) {
